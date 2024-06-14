@@ -11,9 +11,10 @@ document.querySelector(".guess").value = 23;
 console.log(document.querySelector(".guess").value);
 */
 
-const SecretNumber = Math.trunc(Math.random() * 20) + 1;
+//DOM event for the check btn
+let SecretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
-document.querySelector(".number").textContent = SecretNumber;
+let highScore = 0;
 
 document.querySelector(".check").addEventListener("click", function () {
   const guess = Number(document.querySelector(".guess").value);
@@ -27,10 +28,18 @@ document.querySelector(".check").addEventListener("click", function () {
   else if (guess === SecretNumber) {
     document.querySelector(".message").textContent = "Correct Number!";
 
+    //displays the correct number
+    document.querySelector(".number").textContent = SecretNumber;
+
     //changes background color when guess is corect
     document.querySelector("body").style.backgroundColor = "#60b347";
 
     document.querySelector(".number").style.width = "30rem";
+
+    if (score > highScore) {
+      highScore = score;
+      document.querySelector(".highscore").textContent = highScore;
+    }
   }
 
   //when guess is too high
@@ -53,4 +62,24 @@ document.querySelector(".check").addEventListener("click", function () {
       document.querySelector(".score").textContent = "You lost the game!";
     }
   }
+});
+
+//DOM event for again button
+
+//selecting the element with the again class
+document.querySelector(".again").addEventListener("click", function () {
+  //reinitializing the score and SecretNumber variables
+  score = 20;
+  SecretNumber = Math.trunc(Math.random() * 20) + 1;
+
+  //restoring the initial conditions of the messages,score,number and guess input
+  document.querySelector(".message").textContent = "Start guessing...";
+  document.querySelector(".score").textContent = score;
+  document.querySelector(".number").textContent = "?";
+  document.querySelector(".guess").value = "";
+
+  //restoring the original background color and width
+  document.querySelector("body").style.backgroundColor = "#222";
+
+  document.querySelector(".number").style.width = "15rem";
 });
